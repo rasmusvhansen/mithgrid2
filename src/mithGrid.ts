@@ -22,34 +22,27 @@ function generateLayers(num: number) {
   return layers;
 }
 
-const data = generateTestData(50);
+const data = generateTestData(20);
 
-m.mount(document.getElementById('app'), {
+m.mount(document.getElementById('grid'), {
   view: function () {
-    return m('div', [
-      m('table', { className: 'table table-striped latest-data' }, [
-        m('thead', {}, 
-          data.map(node => m('th', {}, node.name))),
-        m('tbody',
-          data.map(function (db) {
-            return m('tr', { key: db.dbname }, [
-              m('td', { className: 'dbname' }, db.dbname),
-              m('td', { className: 'query-count' }, [
-                m('span', { className: db.lastSample.countClassName }, db.lastSample.nbQueries)
-              ]),
-              db.lastSample.topFiveQueries.map(function (query) {
-                return m('td', { className: query.elapsedClassName }, [
-                  query.formatElapsed,
-                  m('div', { className: 'popover left' }, [
-                    m('div', { className: 'popover-content' }, query.query),
-                    m('div', { className: 'arrow' })
-                  ])
-                ])
-              })
-            ])
-          })
-        )
+    const width = 100 / (data.length + 1);
+    return m('div', {className: 'grid'}, [
+      m('div', {className: 'grid-header clearfix'}, [
+        m('div', {className: 'grid-header__cell', style: `width: ${width}%`}, ' - '),
+        ...data.map(n => m('div', {className: 'grid-header__cell', style: `width: ${width}%`}, n.name))
+      ] 
+        
+      ),
+      m('div', {className: 'grid-body'}, [
+        data.map(n => m('div', {className: 'grid-group'}, [
+          m('div', {className: 'grid-group__header'}),
+          ...n.layers.map(l => m('div', {className: 'grid-group__layer clearfix'}, [
+            m('div', {className: 'grid-group__layer-name', style: `width: ${width}%`}, l.name),
+            ...data.map(n => m('div', {className: 'grid-group__cell', style: `width: ${width}%`}, n.name))
+          ]))
+        ]))
       ])
-    ])
+    ]);  
   }
-})
+});

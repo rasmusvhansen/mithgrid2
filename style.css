@@ -1,0 +1,50 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+.grid {
+  width: 80%;
+}
+
+.grid-header {
+  background-color: #ccd;
+  font-weight: bold;
+}
+
+.grid-group, .grid-group__layer {
+  clear: both;
+}
+
+.grid-group__layer:nth-child(odd) {
+  background-color: #778;
+}
+
+.grid-header__cell, .grid-group__cell, .grid-group__layer-name {
+  float: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding: 2px;
+  border-right: 1px solid #667;
+}
+
+.grid-header__cell:last-of-type {
+  border-right: none;
+} 
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
